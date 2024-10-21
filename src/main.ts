@@ -8,9 +8,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-  .setTitle('Blog Pessoal')
-  .setDescription('Projeto Blog Pessoal')
-  .setContact("Pedro Almeida","https://www.linkedin.com/in/pedroaugustosantosalmeida/","almeida.pedroaugusto25@gmail.com")
+  .setTitle('Sport Map')
+  .setDescription('Projeto de Software do curso')
   .setVersion('1.0')
   .addBearerAuth()
   .build();
