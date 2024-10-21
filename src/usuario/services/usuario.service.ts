@@ -16,18 +16,13 @@ export class UsuarioService {
     async findByUsuario(usuario: string): Promise<Usuario | undefined> {
         return await this.usuarioRepository.findOne({
             where: {
-                usuario: usuario
+                email: usuario
             }
         })
     }
 
     async findAll(): Promise<Usuario[]> {
         return await this.usuarioRepository.find(
-            {
-                relations:{
-                    postagem: true
-                }
-            }
         );
 
     }
@@ -38,9 +33,6 @@ export class UsuarioService {
             where: {
                 id
             },
-            relations: {
-                postagem: true
-            }
         });
 
         if (!usuario)
@@ -52,10 +44,7 @@ export class UsuarioService {
 
     async create(usuario: Usuario): Promise<Usuario> {
 
-        let buscaUsuario = await this.findByUsuario(usuario.usuario);
-
-        if (!usuario.foto)
-        usuario.foto = 'https://i.imgur.com/Sk5SjWE.jpg'
+        let buscaUsuario = await this.findByUsuario(usuario.email);
 
         if (!buscaUsuario) {
             usuario.senha = await this.bcrypt.criptografarSenha(usuario.senha)
@@ -69,16 +58,13 @@ export class UsuarioService {
     async update(usuario: Usuario): Promise<Usuario> {
 
         let updateUsuario: Usuario = await this.findById(usuario.id);
-        let buscaUsuario = await this.findByUsuario(usuario.usuario);
+        let buscaUsuario = await this.findByUsuario(usuario.email);
 
         if (!updateUsuario)
             throw new HttpException('Usuário não encontrado!', HttpStatus.NOT_FOUND);
 
         if (buscaUsuario && buscaUsuario.id !== usuario.id)
             throw new HttpException('Usuário (e-mail) já Cadastrado!', HttpStatus.BAD_REQUEST);
-
-        if (!usuario.foto)
-        usuario.foto = 'https://i.imgur.com/Sk5SjWE.jpg'
 
         usuario.senha = await this.bcrypt.criptografarSenha(usuario.senha)
         return await this.usuarioRepository.save(usuario);

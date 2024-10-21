@@ -1,7 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { TypeOrmOptionsFactory, TypeOrmModuleOptions } from "@nestjs/typeorm";
-import { Postagem } from "../../postagem/entities/postagem.entity";
-import { Tema } from "../../tema/entities/tema.entity";
+
 import { Usuario } from "../../usuario/entities/usuario.entity";
 
 
@@ -16,7 +15,7 @@ export class DevService implements TypeOrmOptionsFactory {
             username: 'root',
             password: 'root',
             database: 'db_blogpessoal',
-            entities: [Postagem, Tema, Usuario],
+            entities: [Usuario],
             synchronize: true,
     };
   }
