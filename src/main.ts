@@ -21,11 +21,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   
   // Habilita CORS
-  app.use(cors({
-    origin: 'http://localhost:5173', // O domínio do seu frontend
-    credentials: true, // Permite cookies, se necessário
-  }));
-
+  app.enableCors();
   await app.listen(process.env.PORT || 4000);
 }
 bootstrap();
